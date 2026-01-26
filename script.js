@@ -1,6 +1,6 @@
 const body = document.body
 
-const btnTheme = document.querySelector('.fa-moon')
+const btnTheme = document.querySelector('.fa-sun')
 const btnHamburger = document.querySelector('.fa-bars')
 
 const addThemeClass = (bodyClass, btnClass) => {
@@ -8,8 +8,8 @@ const addThemeClass = (bodyClass, btnClass) => {
   btnTheme.classList.add(btnClass)
 }
 
-const getBodyTheme = localStorage.getItem('portfolio-theme')
-const getBtnTheme = localStorage.getItem('portfolio-btn-theme')
+const getBodyTheme = localStorage.getItem('portfolio-theme') || 'dark'
+const getBtnTheme = localStorage.getItem('portfolio-btn-theme') || 'fa-sun'
 
 addThemeClass(getBodyTheme, getBtnTheme)
 
