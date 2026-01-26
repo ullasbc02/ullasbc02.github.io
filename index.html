@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link
@@ -19,6 +19,9 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <title>Ullas Basavapatna Chandrashekar</title>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
     <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
@@ -27,6 +30,8 @@
     <link rel="manifest" href="favicon/site.webmanifest">
   </head>
   <body class="dark" id="top">
+    <div id="scroll-progress"></div>
+    <div id="particles-js"></div>
     <header class="header center">
       <h3>
         <a href="https://ullasbc02.github.io/" class="link"
@@ -59,6 +64,9 @@
           <li class="nav__list-item">
             <a class="link link--nav" href="#contact">Contact</a>
           </li>
+          <li class="nav__list-item">
+            <a class="link link--nav" href="./ULLAS_BASAVAPATNA_CHANDRASHEKAR.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+          </li>
         </ul>
 
         <button type="button" aria-label="toggle theme" class="btn btn--icon">
@@ -76,40 +84,50 @@
     </header>
 
     <main>
-      <!-- About -->
-      <div class="about center">
-        <h1><span class="about__name">Ullas Basavapatna Chandrashekar.</span></h1>
-        <h2 class="about__role">M.S. in Computer Science at The George Washington University.</h2>
-        <br>
-        <div class="about__contact center">
-<!--           <a href="https://example.com">
-            <span class="btn btn--outline">Resume</span>
-          </a> -->
+      <!-- About / Hero -->
+      <div class="about hero">
+        <div class="hero__text">
+          <h1><span class="about__name">Ullas Basavapatna Chandrashekar.</span></h1>
+          <h2 class="about__role">Backend Engineer · M.S. CS @ GWU</h2>
+        </div>
 
-          <a
-            href="https://github.com/ullasbc02"
-            aria-label="github"
-            class="link link--icon"
-          >
-            <i aria-hidden="true" class="fab fa-github"></i>
-          </a>
+        <div class="about__actions">
+          <div class="about__contact">
+            <a
+              href="./ULLAS_BASAVAPATNA_CHANDRASHEKAR.pdf"
+              aria-label="resume"
+              class="link link--icon"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Resume"
+            >
+              <i aria-hidden="true" class="fas fa-file-alt"></i>
+            </a>
 
-          <a
-            href="https://www.linkedin.com/in/ullasbc/"
-            aria-label="linkedin"
-            class="link link--icon"
-          >
-            <i aria-hidden="true" class="fab fa-linkedin"></i>
-          </a>
-          
-          <a
-            href="https://leetcode.com/u/ullasbc/"
-            aria-label="leetcode"
-            class="link link--icon"
-          >
-            <i aria-hidden="true" class="fas fa-code"></i>
-          </a>
-        
+            <a
+              href="https://github.com/ullasbc02"
+              aria-label="github"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fab fa-github"></i>
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/ullasbc/"
+              aria-label="linkedin"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fab fa-linkedin"></i>
+            </a>
+            
+            <a
+              href="https://leetcode.com/u/ullasbc/"
+              aria-label="leetcode"
+              class="link link--icon"
+            >
+              <i aria-hidden="true" class="fas fa-code"></i>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -245,6 +263,7 @@
             <h3>WeCureIT — Full-Stack Medical Clinic Management & Intelligent Scheduling Platform</h3>
             <p class="project__description">
              Designed and implemented an end-to-end medical clinic management system supporting patients, doctors, and administrators. Built a scalable full-stack platform with dynamic appointment scheduling, multi-facility doctor assignment, and rule-based break optimization. Implemented secure authentication, role-based access control, encrypted payment handling, and real-time availability computation. Integrated data-driven scheduling logic to prevent conflicts, enforce clinical constraints, and improve operational efficiency across healthcare facilities.
+            </p>
             <ul class="project__stack">
               <li class="project__stack-item">Next.js</li>
               <li class="project__stack-item">Spring Boot</li>
@@ -252,6 +271,7 @@
               <li class="project__stack-item">Firebase</li>
               <li class="project__stack-item">Docker</li>
             </ul>
+            <div class="project-links">
              <a
               href="https://github.com/vishrutharavi/wecureit_medical_reservation_system"
               aria-label="source code"
@@ -259,12 +279,14 @@
             >
               <i aria-hidden="true" class="fab fa-github"></i>
             </a>
+            </div>
           </div>
 
           <div class="project">
             <h3>Driftline — Behavioral Drift Detection Platform</h3>
             <p class="project__description">
-             Built a behavioral drift detection platform over distributed traces, detecting dependency and p95 latency regressions (>2×) within 1–2 minutes using execution-graph diffing and baseline snapshots, processing 1,000+ spans/min with <100 ms ingestion latency and reducing simulated incident MTTR by ~50%.
+             Built a behavioral drift detection platform over distributed traces, detecting dependency and p95 latency regressions (>2×) within 1–2 minutes using execution-graph diffing and baseline snapshots, processing 1,000+ spans/min with less than 100 ms ingestion latency and reducing simulated incident MTTR by ~50%.
+            </p>
             <ul class="project__stack">
               <li class="project__stack-item">Python</li>
               <li class="project__stack-item">OpenTelemetry</li>
@@ -295,7 +317,7 @@
               <li class="project__stack-item">SHAP</li>
               <li class="project__stack-item">Plotly</li>
             </ul>
-
+            <div class="project-links">
              <a
               href="https://github.com/ullasbc02/obesity-risk-analytics"
               aria-label="source code"
@@ -303,20 +325,7 @@
             >
               <i aria-hidden="true" class="fab fa-github"></i>
             </a>
-            <!-- <a
-              href="https://medium.com/@rajatrayaraddi/multiple-instance-learning-for-detecting-crowd-behavior-anomalies-in-surveillance-videos-e51858a462bf"
-              aria-label="live preview"
-              class="link link--icon"
-            >
-              <i aria-hidden="true" class="fab fa-medium"></i>
-            </a> -->
-            <!-- <a
-              href="https://doi.org/10.5281/zenodo.17103268"
-              aria-label="live preview"
-              class="link link--icon"
-            >
-              <i aria-hidden="true" class="fas fa-book"></i>
-            </a> -->
+            </div>
           </div>
 
           <div class="project">
@@ -329,6 +338,7 @@
               <li class="project__stack-item">React</li>
             </ul>
 
+            <div class="project-links">
             <a
               href="https://github.com/shrnik/medimate"
               aria-label="source code"
@@ -343,6 +353,7 @@
             >
               <i aria-hidden="true" class="fab fa-medium"></i>
             </a>
+            </div>
           </div>
 
           <div class="project">
@@ -359,6 +370,7 @@
               <li class="project__stack-item">Embedded Systems</li>
             </ul>
 
+            <div class="project-links">
             <a
               href="https://github.com/ullasbc02/Yolo-custom-Object-detection-Animal-Class"
               aria-label="source code"
@@ -366,13 +378,7 @@
             >
               <i aria-hidden="true" class="fab fa-github"></i>
             </a>
-<!--             <a
-              href="https://example.com"
-              aria-label="live preview"
-              class="link link--icon"
-            >
-              <i aria-hidden="true" class="fas fa-external-link-alt"></i>
-            </a> -->
+            </div>
           </div>
 
           <div class="project">
@@ -388,6 +394,7 @@
               <li class="project__stack-item">Runtime Systems</li>
             </ul>
 
+             <div class="project-links">
              <a
               href="https://github.com/ullasbc02/catg"
               aria-label="source code"
@@ -395,6 +402,7 @@
             >
               <i aria-hidden="true" class="fab fa-github"></i>
             </a>
+            </div>
           </div>
           
         </div>
@@ -404,16 +412,15 @@
       <section id="certifications" class="section certifications">
         <h2 class="section__title">Certifications</h2>
       
-        <div class="projects__grid">
+        <div class="certifications__grid">
       
           <div class="project">
             <h3>AWS Academy Graduate - Cloud Operations</h3>
             <a href="https://www.credly.com/badges/ac61d53c-d4f8-493d-bb37-c6a8da23ae21/public_url" target="_blank">
               <img 
                 src="https://images.credly.com/size/128x128/images/07e7ba52-aea4-431f-ba2d-a4113efd1d5a/blob" 
-                alt="AWS Academy Graduate - Cloud Operations" 
-                width="150"
-                style="margin-top: 10px;" />
+                alt="AWS Academy Graduate - Cloud Operations"
+                class="cert-badge" />
             </a>
             <p style="margin-top: 8px; font-size: 0.9rem;">
               Issued: March 2025
@@ -425,9 +432,8 @@
             <a href="https://www.credly.com/badges/6009baab-18ed-4a79-89fe-df3f32dbcfaf/public_url" target="_blank">
               <img 
                 src="https://images.credly.com/size/680x680/images/e3541a0c-dd4a-4820-8052-5001006efc85/blob" 
-                alt="AWS Academy Graduate - Cloud Foundations" 
-                width="150"
-                style="margin-top: 10px;" />
+                alt="AWS Academy Graduate - Cloud Foundations"
+                class="cert-badge" />
             </a>
             <p style="margin-top: 8px; font-size: 0.9rem;">
               Issued: February 2025
@@ -439,9 +445,8 @@
             <a href="https://www.credly.com/badges/29134019-2b4c-4611-b9dd-720d76c712a7/public_url" target="_blank">
               <img 
                 src="https://images.credly.com/size/128x128/images/727c2754-d727-4e27-a1aa-3de2425ce239/blob" 
-                alt="AWS Academy Graduate - Machine Learning" 
-                width="150"
-                style="margin-top: 10px;" />
+                alt="AWS Academy Graduate - Machine Learning"
+                class="cert-badge" />
             </a>
             <p style="margin-top: 8px; font-size: 0.9rem;">
               Issued: April 2025
@@ -453,9 +458,8 @@
             <a href="https://www.credly.com/badges/8472fd80-1e73-4bb0-af58-861ce079b951/public_url" target="_blank">
               <img 
                 src="https://images.credly.com/size/128x128/images/f6ef7adb-91dd-46dc-ba1e-17ec36b8e375/blob" 
-                alt="Red Hat Enterprise Linux Automation with Ansible" 
-                width="150"
-                style="margin-top: 10px;" />
+                alt="Red Hat Enterprise Linux Automation with Ansible"
+                class="cert-badge" />
             </a>
             <p style="margin-top: 8px; font-size: 0.9rem;">
               Issued: April 2025
@@ -467,9 +471,8 @@
             <a href="https://www.credly.com/badges/f631d77b-d435-49be-bb50-4e782dad34cb/public_url" target="_blank">
               <img 
                 src="https://images.credly.com/size/128x128/images/f2fd5ff9-f073-498f-8aed-dfd62f8315cf/blob" 
-                alt="Red Hat OpenShift Administration I: Operating a Production Cluster" 
-                width="150"
-                style="margin-top: 10px;" />
+                alt="Red Hat OpenShift Administration I: Operating a Production Cluster"
+                class="cert-badge" />
             </a>
             <p style="margin-top: 8px; font-size: 0.9rem;">
               Issued: May 2025
@@ -481,9 +484,8 @@
             <a href="https://www.credly.com/badges/df50afc3-3089-4acf-9e6e-1b9e1e13ed75/public_url" target="_blank">
               <img 
                 src="https://images.credly.com/size/128x128/images/1bc718d9-6aae-4b20-81f9-a19b4982a026/blob" 
-                alt="Red Hat System Administration I" 
-                width="150"
-                style="margin-top: 10px;" />
+                alt="Red Hat System Administration I"
+                class="cert-badge" />
             </a>
             <p style="margin-top: 8px; font-size: 0.9rem;">
               Issued: April 2025
@@ -508,7 +510,7 @@
         href="https://ullasbc02.github.io/"
         class="link footer__link"
       >
-        <p>&copy; 2025 Ullas Basavapatna Chandrashekar. All Rights Reserved.
+        <p>&copy; 2026 Ullas Basavapatna Chandrashekar. All Rights Reserved.
       </a>
     </footer>
 
