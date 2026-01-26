@@ -67,3 +67,176 @@ const scrollUp = () => {
 }
 
 document.addEventListener('scroll', scrollUp)
+
+// Scroll progress bar
+const updateProgress = () => {
+  const bar = document.getElementById('scroll-progress')
+  if (!bar) return
+  const h = document.documentElement
+  const scrollTop = h.scrollTop || body.scrollTop || 0
+  const height = (h.scrollHeight - h.clientHeight) || 1
+  const pct = Math.max(0, Math.min(100, (scrollTop / height) * 100))
+  bar.style.width = pct + '%'
+}
+
+window.addEventListener('load', updateProgress)
+window.addEventListener('resize', updateProgress)
+document.addEventListener('scroll', updateProgress)
+
+// Scroll animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+}
+
+const animateOnScroll = (entries, observer) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible')
+      }, index * 100)
+      observer.unobserve(entry.target)
+    }
+  })
+}
+
+const observer = new IntersectionObserver(animateOnScroll, observerOptions)
+
+// Observe all animated elements and reveal those already in view on load
+const animatedElements = document.querySelectorAll('.project, .education, .experience, .skill-category')
+animatedElements.forEach(el => observer.observe(el))
+
+const revealIfInView = () => {
+  animatedElements.forEach(el => {
+    const r = el.getBoundingClientRect()
+    if (r.top < window.innerHeight - 50) {
+      el.classList.add('visible')
+    }
+  })
+}
+
+window.addEventListener('load', revealIfInView)
+window.addEventListener('resize', revealIfInView)
+
+// Particles.js Configuration
+particlesJS('particles-js', {
+  particles: {
+    number: {
+      value: 80,
+      density: {
+        enable: true,
+        value_area: 800
+      }
+    },
+    color: {
+      value: '#60a5fa'
+    },
+    shape: {
+      type: 'circle',
+      stroke: {
+        width: 0,
+        color: '#000000'
+      }
+    },
+    opacity: {
+      value: 0.5,
+      random: false,
+      anim: {
+        enable: true,
+        speed: 1,
+        opacity_min: 0.1,
+        sync: false
+      }
+    },
+    size: {
+      value: 3,
+      random: true,
+      anim: {
+        enable: true,
+        speed: 2,
+        size_min: 0.1,
+        sync: false
+      }
+    },
+    line_linked: {
+      enable: true,
+      distance: 150,
+      color: '#60a5fa',
+      opacity: 0.4,
+      width: 1
+    },
+    move: {
+      enable: true,
+      speed: 2,
+      direction: 'none',
+      random: false,
+      straight: false,
+      out_mode: 'out',
+      bounce: false,
+      attract: {
+        enable: false,
+        rotateX: 600,
+        rotateY: 1200
+      }
+    }
+  },
+  interactivity: {
+    detect_on: 'canvas',
+    events: {
+      onhover: {
+        enable: true,
+        mode: 'grab'
+      },
+      onclick: {
+        enable: true,
+        mode: 'push'
+      },
+      resize: true
+    },
+    modes: {
+      grab: {
+        distance: 140,
+        line_linked: {
+          opacity: 1
+        }
+      },
+      push: {
+        particles_nb: 4
+      }
+    }
+  },
+  retina_detect: true
+})
+
+  // Typed.js - rotating headline in the about section
+  try {
+    new Typed('.about__role', {
+      strings: [
+        'M.S. in Computer Science at The George Washington University.',
+        'Backend Engineer · Distributed Systems',
+        'Full‑Stack Developer · Cloud'
+      ],
+      typeSpeed: 40,
+      backSpeed: 18,
+      backDelay: 1400,
+      smartBackspace: true,
+      loop: true
+    })
+  } catch (e) {
+    // Typed.js not loaded — safely ignore
+  }
+
+  // VanillaTilt - subtle depth effect on cards
+  try {
+    VanillaTilt.init(document.querySelectorAll('.project, .experience, .skill-category'), {
+      max: 8,
+      speed: 400,
+      glare: false,
+      scale: 1.03
+    })
+  } catch (e) {
+    // VanillaTilt not loaded — safely ignore
+  }
+
+// Custom cursor removed
+
