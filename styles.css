@@ -141,6 +141,37 @@ body::before {
   }
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @keyframes scaleIn {
   from {
     opacity: 0;
@@ -187,6 +218,43 @@ body::before {
   to {
     opacity: 1;
     clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes blurReveal {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes spring {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
@@ -336,6 +404,12 @@ button {
   text-transform: lowercase;
   transition: all 0.3s ease;
   border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+.btn:active {
+  animation: spring 0.3s ease;
 }
 
 .btn--outline {
@@ -352,6 +426,7 @@ button {
   border-color: var(--clr-primary-light);
   transform: translateY(-2px);
   box-shadow: 0 12px 32px -14px rgba(45, 212, 191, 0.6), 0 0 0 1px rgba(45, 212, 191, 0.25);
+  letter-spacing: 0.02em;
 }
 
 .btn--outline:before {
@@ -427,6 +502,13 @@ button {
   animation: slideDown 0.6s ease-out;
   position: relative;
   z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.header.scrolled {
+  background-color: rgba(var(--clr-bg-alt-rgb), 0.95);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
+  margin-top: 0.5em;
 }
 
 main {
@@ -464,6 +546,8 @@ main {
   height: 4px;
   background: linear-gradient(90deg, var(--clr-primary), var(--clr-primary-light));
   border-radius: 2px;
+  animation: shimmer 2s linear infinite;
+  background-size: 1000px 100%;
 }
 
 .nav__list {
@@ -497,11 +581,12 @@ main {
 }
 
 .about__name {
-  background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-light));
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-light), var(--clr-primary), var(--clr-primary-light));
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: slideInLeft 0.8s ease-out 0.4s both;
+  animation: slideInLeft 0.8s ease-out 0.4s both, gradientFlow 8s ease infinite;
 }
 
 .about__role {
@@ -597,11 +682,25 @@ main {
   display: flex;
   flex-direction: column;
   min-height: 420px;
+  cursor: pointer;
+}
+
+.project:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 45px -20px rgba(45, 212, 191, 0.6), var(--shadow-lg);
+  border-color: var(--clr-primary);
 }
 
 .project.visible {
   opacity: 1;
   transform: translateY(0);
+  animation: blurReveal 0.8s ease-out forwards;
+}
+
+.project.visible:hover {
+  transform: translateY(-8px) scale(1.02) !important;
+  box-shadow: 0 20px 45px -20px rgba(45, 212, 191, 0.6), var(--shadow-lg) !important;
+  border-color: var(--clr-primary) !important;
 }
 
 .project:nth-child(1) {
@@ -739,11 +838,25 @@ main {
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.5s ease-out, opacity 0.6s ease-out, transform 0.6s ease-out;
+  cursor: pointer;
+}
+
+.education:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 45px -20px rgba(45, 212, 191, 0.6), var(--shadow-lg);
+  border-color: var(--clr-primary);
 }
 
 .education.visible {
   opacity: 1;
   transform: translateY(0);
+  animation: blurReveal 0.8s ease-out forwards;
+}
+
+.education.visible:hover {
+  transform: translateY(-5px) scale(1.02) !important;
+  box-shadow: 0 20px 45px -20px rgba(45, 212, 191, 0.6), var(--shadow-lg) !important;
+  border-color: var(--clr-primary) !important;
 }
 
 .education:nth-child(1) {
@@ -816,11 +929,25 @@ main {
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.5s ease-out, opacity 0.6s ease-out, transform 0.6s ease-out;
+  cursor: pointer;
+}
+
+.experience:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 45px -20px rgba(45, 212, 191, 0.6), var(--shadow-lg);
+  border-color: var(--clr-primary);
 }
 
 .experience.visible {
   opacity: 1;
   transform: translateY(0);
+  animation: blurReveal 0.8s ease-out forwards;
+}
+
+.experience.visible:hover {
+  transform: translateY(-5px) scale(1.02) !important;
+  box-shadow: 0 20px 45px -20px rgba(45, 212, 191, 0.6), var(--shadow-lg) !important;
+  border-color: var(--clr-primary) !important;
 }
 
 .experience:nth-child(1) {
@@ -891,11 +1018,25 @@ main {
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.5s ease-out, opacity 0.6s ease-out, transform 0.6s ease-out;
+  cursor: pointer;
+}
+
+.skill-category:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 45px -20px rgba(45, 212, 191, 0.6), var(--shadow-lg);
+  border-color: var(--clr-primary);
 }
 
 .skill-category.visible {
   opacity: 1;
   transform: translateY(0);
+  animation: blurReveal 0.8s ease-out forwards;
+}
+
+.skill-category.visible:hover {
+  transform: translateY(-5px) scale(1.02) !important;
+  box-shadow: 0 20px 45px -20px rgba(45, 212, 191, 0.6), var(--shadow-lg) !important;
+  border-color: var(--clr-primary) !important;
 }
 
 .skill-category:nth-child(1) {
@@ -986,7 +1127,17 @@ main {
 
 .skills__list-item {
   margin: 0;
+  animation: slideInFromLeft 0.6s ease-out backwards;
 }
+
+.skills__list-item:nth-child(1) { animation-delay: 0.1s; }
+.skills__list-item:nth-child(2) { animation-delay: 0.15s; }
+.skills__list-item:nth-child(3) { animation-delay: 0.2s; }
+.skills__list-item:nth-child(4) { animation-delay: 0.25s; }
+.skills__list-item:nth-child(5) { animation-delay: 0.3s; }
+.skills__list-item:nth-child(6) { animation-delay: 0.35s; }
+.skills__list-item:nth-child(7) { animation-delay: 0.4s; }
+.skills__list-item:nth-child(8) { animation-delay: 0.45s; }
 
 .contact {
   flex-direction: column;
@@ -1057,10 +1208,11 @@ body,
   width: 50px;
   height: 50px;
   box-shadow: var(--shadow-lg);
+  animation: float 3s ease-in-out infinite;
 }
 
 .scroll-top:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px) rotate(360deg);
   box-shadow: 0 15px 30px -10px var(--clr-primary);
 }
 
