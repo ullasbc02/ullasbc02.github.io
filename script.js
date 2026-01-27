@@ -77,6 +77,14 @@ const updateProgress = () => {
   const height = (h.scrollHeight - h.clientHeight) || 1
   const pct = Math.max(0, Math.min(100, (scrollTop / height) * 100))
   bar.style.width = pct + '%'
+  
+  // Header background on scroll
+  const header = document.querySelector('.header');
+  if (scrollTop > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
 }
 
 window.addEventListener('load', updateProgress)
