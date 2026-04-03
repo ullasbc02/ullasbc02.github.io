@@ -86,9 +86,19 @@
     <main>
       <!-- About / Hero -->
       <div class="about hero">
-        <div class="hero__text">
-          <h1><span class="about__name">Ullas Basavapatna Chandrashekar.</span></h1>
-          <h2 class="about__role">Backend Engineer · M.S. CS @ GWU</h2>
+        <div class="hero__content">
+          <div class="hero__profile-picture">
+            <img
+              src="profilepicture.png"
+              alt="Ullas Basavapatna Chandrashekar"
+              class="profile-img"
+            />
+          </div>
+
+          <div class="hero__text">
+            <h1><span class="about__name">Ullas Basavapatna Chandrashekar.</span></h1>
+            <h2 class="about__role">Backend Engineer · M.S. CS @ GWU</h2>
+          </div>
         </div>
 
         <div class="about__actions">
@@ -240,6 +250,18 @@
           </div>
 
           <div class="skill-category">
+            <h3 class="skill-category__title">Performance Testing</h3>
+            <ul class="skills__list">
+              <li class="skills__list-item btn btn--plain">JMeter</li>
+              <li class="skills__list-item btn btn--plain">LoadRunner</li>
+              <li class="skills__list-item btn btn--plain">Performance Engineering</li>
+              <li class="skills__list-item btn btn--plain">k6</li>
+              <li class="skills__list-item btn btn--plain">Grafana</li>
+              <li class="skills__list-item btn btn--plain">Kibana</li>
+            </ul>
+          </div>
+
+          <div class="skill-category">
             <h3 class="skill-category__title">Tools & Others</h3>
             <ul class="skills__list">
               <li class="skills__list-item btn btn--plain">Git</li>
@@ -247,6 +269,7 @@
               <li class="skills__list-item btn btn--plain">Linux/Unix</li>
               <li class="skills__list-item btn btn--plain">Jira</li>
               <li class="skills__list-item btn btn--plain">Agile</li>
+              <li class="skills__list-item btn btn--plain">AWS</li>
             </ul>
           </div>
 
@@ -259,6 +282,30 @@
 
         <div class="projects__grid">
 
+
+          <div class="project">
+            <h3>Semantic Drift Detection — NLP Pipeline for Emerging Slang & Language Change Analysis</h3>
+            <p class="project__description">
+              Built an NLP system to detect semantic drift and emerging internet slang across Reddit communities over time. Designed a longitudinal language analysis pipeline using contextual embeddings, breakout detection, and clustering to identify when words appeared, how their meanings shifted, and which new senses emerged. Implemented large-scale subreddit data processing, temporal frequency tracking, contextual similarity analysis, and masked language modeling evaluation to estimate when evolving vocabulary could impact model understanding and signal the need for selective retraining.
+            </p>
+            <ul class="project__stack">
+              <li class="project__stack-item">Sentence Transformers</li>
+              <li class="project__stack-item">RoBERTa</li>
+              <li class="project__stack-item">HDBSCAN</li>
+              <li class="project__stack-item">Pandas</li>
+              <li class="project__stack-item">NumPy</li>
+            </ul>
+            <!-- <div class="project-links">
+              <a
+                href="YOUR_GITHUB_LINK_HERE"
+                aria-label="source code"
+                class="link link--icon"
+              >
+                <i aria-hidden="true" class="fab fa-github"></i>
+              </a>
+            </div> -->
+          </div>
+
           <div class="project">
             <h3>WeCureIT — Full-Stack Medical Clinic Management & Intelligent Scheduling Platform</h3>
             <p class="project__description">
@@ -270,10 +317,12 @@
               <li class="project__stack-item">PostgreSQL</li>
               <li class="project__stack-item">Firebase</li>
               <li class="project__stack-item">Docker</li>
+              <li class="project__stack-item">Neo4j</li>
+              <li class="project__stack-item">Ollama</li>
             </ul>
             <div class="project-links">
              <a
-              href="https://github.com/vishrutharavi/wecureit_medical_reservation_system"
+              href="https://github.com/vishrutharavi/wecureit"
               aria-label="source code"
               class="link link--icon"
             >
@@ -294,13 +343,15 @@
               <li class="project__stack-item">Microservices</li>
               <li class="project__stack-item">Docker</li>
             </ul>
-             <!-- <a
-              href="https://github.com/vishrutharavi/wecureit_medical_reservation_system"
+            <div class="project-links">
+             <a
+              href="https://github.com/ullasbc02/driftline"
               aria-label="source code"
               class="link link--icon"
             >
               <i aria-hidden="true" class="fab fa-github"></i>
-            </a> -->
+            </a>
+            </div>
           </div>
           
           <div class="project">
@@ -331,7 +382,7 @@
           <div class="project">
             <h3>AI-Powered Diagnostic Support Tool</h3>
             <p class="project__description">
-              Retrieval-Augmented Generation (RAG) based diagnostic support tool using PubMed data and OpenAI API to suggest possible diseases based on patient symptoms, demographics, and medical history. Integrated Agentic AI to provide context-specific responses.
+              Developed a medical diagnostic support system that utilizes Agentic RAG to suggest diseases and tests based on patient symptoms. By indexing over 230,000 PubMed abstracts into a ChromaDB vector store, the system ensures all AI-generated suggestions are backed by peer-reviewed evidence, reducing the risk of misinformation common in standard LLMs, and providing clinicians with transparent, data-driven insights for informed decision-making.
             </p>
             <ul class="project__stack">
               <li class="project__stack-item">Node.js</li>
@@ -347,7 +398,7 @@
               <i aria-hidden="true" class="fab fa-github"></i>
             </a>
             <a
-              href="https://medium.com/@rajatrayaraddi/rag-based-medical-diagnostic-support-tool-1b57167c5089"
+              href="https://medium.com/@ullasbc02/medimate-rag-based-medical-diagnostic-support-tool-e333056ca7db"
               aria-label="live preview"
               class="link link--icon"
             >
