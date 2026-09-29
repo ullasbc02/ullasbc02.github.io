@@ -1,250 +1,98 @@
 const body = document.body
-const btnTheme = document.querySelector('#btn-theme')
-const btnHamburger = document.querySelector('.fa-bars')
+const header = document.querySelector('[data-header]')
+const progress = document.querySelector('#scroll-progress')
+const menuToggle = document.querySelector('.menu-toggle')
+const nav = document.querySelector('.site-nav')
+const themeToggle = document.querySelector('.theme-toggle')
 
-// Initialize theme from localStorage or use default
-const savedTheme = localStorage.getItem('portfolio-theme')
-const savedIcon = localStorage.getItem('portfolio-btn-theme')
-
-if (savedTheme && savedIcon) {
-  body.classList.remove('light', 'dark')
-  body.classList.add(savedTheme)
-  btnTheme.className = `fas ${savedIcon}`
+const setTheme = (theme) => {
+  body.classList.toggle('light', theme === 'light')
+  body.classList.toggle('dark', theme !== 'light')
+  themeToggle.setAttribute('aria-label', theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme')
+  localStorage.setItem('portfolio-theme', theme)
 }
 
-const isDark = () => body.classList.contains('dark')
+setTheme(localStorage.getItem('portfolio-theme') || 'dark')
+themeToggle.addEventListener('click', () => setTheme(body.classList.contains('light') ? 'dark' : 'light'))
 
-const setTheme = (bodyClass, iconClass) => {
-  // Remove both theme classes and add the new one
-  body.classList.remove('light', 'dark')
-  body.classList.add(bodyClass)
-  
-  // Update icon class while preserving 'fas'
-  btnTheme.className = `fas ${iconClass}`
-  
-  // Save to localStorage
-  localStorage.setItem('portfolio-theme', bodyClass)
-  localStorage.setItem('portfolio-btn-theme', iconClass)
+const closeMenu = () => {
+  nav.classList.remove('is-open')
+  menuToggle.setAttribute('aria-expanded', 'false')
+  menuToggle.setAttribute('aria-label', 'Open navigation menu')
 }
 
-const toggleTheme = () => {
-  if (isDark()) {
-    setTheme('light', 'fa-moon')
-  } else {
-    setTheme('dark', 'fa-sun')
-  }
+menuToggle.addEventListener('click', () => {
+  const open = nav.classList.toggle('is-open')
+  menuToggle.setAttribute('aria-expanded', String(open))
+  menuToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu')
+})
+nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu))
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeMenu()
+})
+
+const updateScrollState = () => {
+  const scrollTop = window.scrollY
+  const scrollRange = document.documentElement.scrollHeight - window.innerHeight
+  progress.style.width = `${scrollRange ? (scrollTop / scrollRange) * 100 : 0}%`
+  header.classList.toggle('is-scrolled', scrollTop > 30)
+  document.querySelector('.back-to-top').classList.toggle('is-visible', scrollTop > 500)
 }
+window.addEventListener('scroll', updateScrollState, { passive: true })
+window.addEventListener('resize', updateScrollState)
+updateScrollState()
 
-btnTheme.addEventListener('click', toggleTheme)
-
-const displayList = () => {
-	const navUl = document.querySelector('.nav__list')
-
-	if (btnHamburger.classList.contains('fa-bars')) {
-		btnHamburger.classList.remove('fa-bars')
-		btnHamburger.classList.add('fa-times')
-		navUl.classList.add('display-nav-list')
-	} else {
-		btnHamburger.classList.remove('fa-times')
-		btnHamburger.classList.add('fa-bars')
-		navUl.classList.remove('display-nav-list')
-	}
-}
-
-btnHamburger.addEventListener('click', displayList)
-
-const scrollUp = () => {
-	const btnScrollTop = document.querySelector('.scroll-top')
-
-	if (
-		body.scrollTop > 500 ||
-		document.documentElement.scrollTop > 500
-	) {
-		btnScrollTop.style.display = 'block'
-	} else {
-		btnScrollTop.style.display = 'none'
-	}
-}
-
-document.addEventListener('scroll', scrollUp)
-
-// Scroll progress bar
-const updateProgress = () => {
-  const bar = document.getElementById('scroll-progress')
-  if (!bar) return
-  const h = document.documentElement
-  const scrollTop = h.scrollTop || body.scrollTop || 0
-  const height = (h.scrollHeight - h.clientHeight) || 1
-  const pct = Math.max(0, Math.min(100, (scrollTop / height) * 100))
-  bar.style.width = pct + '%'
-  
-  // Header background on scroll
-  const header = document.querySelector('.header');
-  if (scrollTop > 50) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
-  }
-}
-
-window.addEventListener('load', updateProgress)
-window.addEventListener('resize', updateProgress)
-document.addEventListener('scroll', updateProgress)
-
-// Scroll animations
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-}
-
-const animateOnScroll = (entries, observer) => {
-  entries.forEach((entry, index) => {
+const revealObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.classList.add('visible')
-      }, index * 100)
+      entry.target.classList.add('is-visible')
       observer.unobserve(entry.target)
     }
   })
-}
+}, { threshold: 0.12, rootMargin: '0px 0px -30px' })
+document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element))
 
-const observer = new IntersectionObserver(animateOnScroll, observerOptions)
-
-// Observe all animated elements and reveal those already in view on load
-const animatedElements = document.querySelectorAll('.project, .education, .experience, .skill-category')
-animatedElements.forEach(el => observer.observe(el))
-
-const revealIfInView = () => {
-  animatedElements.forEach(el => {
-    const r = el.getBoundingClientRect()
-    if (r.top < window.innerHeight - 50) {
-      el.classList.add('visible')
+const sectionLinks = [...document.querySelectorAll('.site-nav a[href^="#"]')]
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      sectionLinks.forEach((link) => {
+        const active = link.getAttribute('href') === `#${entry.target.id}`
+        link.classList.toggle('is-active', active)
+        if (active) link.setAttribute('aria-current', 'location')
+        else link.removeAttribute('aria-current')
+      })
     }
   })
-}
-
-window.addEventListener('load', revealIfInView)
-window.addEventListener('resize', revealIfInView)
-
-// Particles.js Configuration
-particlesJS('particles-js', {
-  particles: {
-    number: {
-      value: 80,
-      density: {
-        enable: true,
-        value_area: 800
-      }
-    },
-    color: {
-      value: '#60a5fa'
-    },
-    shape: {
-      type: 'circle',
-      stroke: {
-        width: 0,
-        color: '#000000'
-      }
-    },
-    opacity: {
-      value: 0.5,
-      random: false,
-      anim: {
-        enable: true,
-        speed: 1,
-        opacity_min: 0.1,
-        sync: false
-      }
-    },
-    size: {
-      value: 3,
-      random: true,
-      anim: {
-        enable: true,
-        speed: 2,
-        size_min: 0.1,
-        sync: false
-      }
-    },
-    line_linked: {
-      enable: true,
-      distance: 150,
-      color: '#60a5fa',
-      opacity: 0.4,
-      width: 1
-    },
-    move: {
-      enable: true,
-      speed: 2,
-      direction: 'none',
-      random: false,
-      straight: false,
-      out_mode: 'out',
-      bounce: false,
-      attract: {
-        enable: false,
-        rotateX: 600,
-        rotateY: 1200
-      }
-    }
-  },
-  interactivity: {
-    detect_on: 'canvas',
-    events: {
-      onhover: {
-        enable: true,
-        mode: 'grab'
-      },
-      onclick: {
-        enable: true,
-        mode: 'push'
-      },
-      resize: true
-    },
-    modes: {
-      grab: {
-        distance: 140,
-        line_linked: {
-          opacity: 1
-        }
-      },
-      push: {
-        particles_nb: 4
-      }
-    }
-  },
-  retina_detect: true
+}, { rootMargin: '-35% 0px -55% 0px', threshold: 0 })
+sectionLinks.forEach((link) => {
+  const section = document.querySelector(link.getAttribute('href'))
+  if (section) sectionObserver.observe(section)
 })
 
-  // Typed.js - rotating headline in the about section
-  try {
-    new Typed('.about__role', {
-      strings: [
-        'M.S. in Computer Science at The George Washington University.',
-        'Backend Engineer · Distributed Systems',
-        'Full‑Stack Developer · Cloud'
-      ],
-      typeSpeed: 40,
-      backSpeed: 18,
-      backDelay: 1400,
-      smartBackspace: true,
-      loop: true
+const filterButtons = document.querySelectorAll('.filter-button')
+const projects = document.querySelectorAll('.project-card')
+const textWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
+const textNodes = []
+let currentTextNode
+while ((currentTextNode = textWalker.nextNode())) textNodes.push(currentTextNode)
+textNodes.forEach((node) => {
+  if (/^\s*\+\s*$/.test(node.textContent)) node.remove()
+})
+filterButtons.forEach((button) => {
+  button.setAttribute('aria-pressed', String(button.classList.contains('is-active')))
+  button.addEventListener('click', () => {
+    const filter = button.dataset.filter
+    filterButtons.forEach((item) => {
+      const active = item === button
+      item.classList.toggle('is-active', active)
+      item.setAttribute('aria-pressed', String(active))
     })
-  } catch (e) {
-    // Typed.js not loaded — safely ignore
-  }
-
-  // VanillaTilt - subtle depth effect on cards
-  try {
-    VanillaTilt.init(document.querySelectorAll('.project, .experience, .skill-category'), {
-      max: 8,
-      speed: 400,
-      glare: false,
-      scale: 1.03
+    projects.forEach((project) => {
+      const categories = project.dataset.category.split(' ')
+      const hidden = filter !== 'all' && !categories.includes(filter)
+      project.classList.toggle('is-hidden', hidden)
     })
-  } catch (e) {
-    // VanillaTilt not loaded — safely ignore
-  }
-
-// Custom cursor removed
-
+  })
+})
